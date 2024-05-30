@@ -11,11 +11,14 @@ export class Game {
         if (this.gameState === 'start') {
             startSchermDisplay.style.display = "block"
             
-            startButton.addEventListener('click', () => this.startGame())
+            startButton.addEventListener('click', () => {
+                startSchermDisplay.style.display = "none"
+                this.startGame()
+            })
         }
     }
     startGame() {
-        console.log("Test") // TODO: Remove
+
     }
     render() {
 
