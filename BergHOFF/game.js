@@ -3,24 +3,53 @@ export class Game {
         this.canvas = canvas
         this.ctx = ctx
         this.gameState = 'start' // Start || playing 
+
+        this.initialiseerBackground()
+
+    }
+
+
+    initialiseerBackground() {
+        // Background canvas
+        const canvasBackground = document.createElement('canvas')
+        const ctxBackground = canvasBackground.getContext('2d')
+        canvasBackground.width = this.canvas.width
+        canvasBackground.height = this.canvas.height
+
+        const backgroundImage = new Image()
+        backgroundImage.src = './images/background.jpg'
+
+        backgroundImage.onload = () => { // arrow functie voor juiste this aan te spreken!!!
+            ctxBackground.drawImage(backgroundImage, 0, 0, canvasBackground.width, canvasBackground.height)
+            this.ctx.drawImage(canvasBackground, 0, 0)
+        }
     }
     startScherm() {
-        const startSchermDisplay = document.querySelector('.startScherm')
+        const startSchermDisplay = document.querySelector('.start-scherm')
         const startButton = startSchermDisplay.querySelector('button')
 
         if (this.gameState === 'start') {
             startSchermDisplay.style.display = "block"
-            
+            this.canvas.classList.toggle('blur-brightness')
+
             startButton.addEventListener('click', () => {
                 startSchermDisplay.style.display = "none"
+                this.canvas.classList.remove('blur-brightness')
                 this.startGame()
             })
         }
     }
     startGame() {
+        this.gameState = 'playing'
 
+        if (this.gameState === 'playing') { // dubbele check dat game aan het spelen is en niet geeindigd is
+            
+
+        }
     }
     render() {
+    }
+    update() {
 
     }
 
