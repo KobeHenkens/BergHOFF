@@ -11,7 +11,7 @@ body {
 /* Helpers */ 
 
 .blur-brightness {
-    filter: blur(0.4rem) brightness(60%); 
+    filter: blur(0.4rem) brightness(50%); 
     
 }
 

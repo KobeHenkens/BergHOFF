@@ -23,6 +23,12 @@ export class Game {
             ctxBackground.drawImage(backgroundImage, 0, 0, canvasBackground.width, canvasBackground.height)
             this.ctx.drawImage(canvasBackground, 0, 0)
         }
+        /* Chef op startscherm OPTIE */
+        const chef = new Image()
+        chef.src = './images/chef.png'
+        chef.onload = () => {
+            this.ctx.drawImage(chef, 0, 0, chef.width * 2, chef.height *2)
+        }
     }
     startScherm() {
         const startSchermDisplay = document.querySelector('.start-scherm')
