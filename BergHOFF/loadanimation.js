@@ -1,7 +1,7 @@
 import { Application, Assets, AnimatedSprite, Container } from 'pixi.js';
        
 // DOCS BRON: https://pixijs.com/8.x/guides/basics/getting-started#loading-pixijs
-export const loadAnimation = async function(frames, x, y) {
+export const loadAnimation = async function(frames, x, y, animationSpeed) {
     const app = new Application()
 
     await app.init({
@@ -20,7 +20,7 @@ export const loadAnimation = async function(frames, x, y) {
 
         // Animatie wordt gemaakt
         const animatedSprite = new AnimatedSprite(textures);
-        animatedSprite.animationSpeed = 0.4; // Animatie snelheid
+        animatedSprite.animationSpeed = animationSpeed; // Animatie snelheid
         animatedSprite.play();
         
         animatedSprite.x = x // Positie x-as
