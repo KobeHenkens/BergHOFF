@@ -24,7 +24,7 @@ export class Speler {
             './images/chef/keyframes/__black_hair_chef_idle_015.png',
             './images/chef/keyframes/__black_hair_chef_idle_016.png',
         ]
-        loadAnimation(frames)
+        console.log(loadAnimation(frames))
     }
 
 }

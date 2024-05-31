@@ -23,7 +23,7 @@ body {
     transform: translate(-50%, -50%);
     max-height: 100%;
     max-width: 100%;
-    
+    z-index: -1;
 }
 
 /* start scherm */ 
