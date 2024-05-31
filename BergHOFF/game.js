@@ -1,11 +1,13 @@
+import { Speler } from "./speler"
+
 export class Game {
     constructor(canvas, ctx) {
         this.canvas = canvas
         this.ctx = ctx
         this.gameState = 'start' // Start || playing 
-
+        this.speler = new Speler(this)
         this.initialiseerBackground()
-
+        this.speler.idle() // test remove!
     }
 
 
@@ -23,12 +25,12 @@ export class Game {
             ctxBackground.drawImage(backgroundImage, 0, 0, canvasBackground.width, canvasBackground.height)
             this.ctx.drawImage(canvasBackground, 0, 0)
         }
-        /* Chef op startscherm OPTIE */
+        /* Chef op startscherm OPTIE 
         const chef = new Image()
         chef.src = './images/chef.png'
         chef.onload = () => {
             this.ctx.drawImage(chef, 0, 0, chef.width * 2, chef.height *2)
-        }
+        }*/
     }
     startScherm() {
         const startSchermDisplay = document.querySelector('.start-scherm')
@@ -42,6 +44,7 @@ export class Game {
                 startSchermDisplay.style.display = "none"
                 this.canvas.classList.remove('blur-brightness')
                 this.startGame()
+                console.log(this.speler)
             })
         }
     }

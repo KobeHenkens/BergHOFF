@@ -6,8 +6,10 @@ canvas.width = 1920;
 canvas.height = 1080;
 
 const game = new Game(canvas, ctx)
+// Funcite start het spel wanneer alle fotos zijn ingeladen
+// Nog niet maken...
 
-// Functie start het spel wanneer de knop is actief
+
 
 
 // Render startscherm
