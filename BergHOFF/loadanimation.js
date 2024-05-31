@@ -1,24 +1,32 @@
 import { Application, Assets, AnimatedSprite, Container } from 'pixi.js';
        
 // DOCS BRON: https://pixijs.com/8.x/guides/basics/getting-started#loading-pixijs
-export const loadAnimation = async function(frames) {
+export const loadAnimation = async function(frames, x, y) {
     const app = new Application()
 
-    await app.init({width: 824, height: 630, backgroundAlpha: 0, autoDensity: true})
+    await app.init({
+        width: 824, 
+        height: 630, 
+        backgroundAlpha: 0, 
+        autoDensity: true,
+        resizeTo: window,
+
+    })
     document.body.appendChild(app.canvas)
     
 
-      // Load all frames using the Assets API
+      // Alle afbeeldingen worden ingeladen
       const textures = await Promise.all(frames.map(frame => Assets.load(frame)));
 
-        // Create an AnimatedSprite
+        // Animatie wordt gemaakt
         const animatedSprite = new AnimatedSprite(textures);
-        animatedSprite.animationSpeed = 0.4; // Adjust the animation speed as needed
+        animatedSprite.animationSpeed = 0.4; // Animatie snelheid
         animatedSprite.play();
         
-
-        // Add the animated sprite to the stage
-        console.log(app.stage.addChild(animatedSprite))
+        animatedSprite.x = x // Positie x-as
+        animatedSprite.y = y // Positie y-as
+        
+        app.stage.addChild(animatedSprite)
 
 }
 

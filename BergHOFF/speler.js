@@ -4,7 +4,7 @@ export class Speler {
     constructor(game) {
         this.game = game
     }
-    idle() {
+    idle(x, y) {
         const frames = [
             './images/chef/keyframes/__black_hair_chef_idle_000.png',
             './images/chef/keyframes/__black_hair_chef_idle_001.png',
@@ -24,7 +24,7 @@ export class Speler {
             './images/chef/keyframes/__black_hair_chef_idle_015.png',
             './images/chef/keyframes/__black_hair_chef_idle_016.png',
         ]
-        console.log(loadAnimation(frames))
+        loadAnimation(frames, x, y)
     }
 
 }

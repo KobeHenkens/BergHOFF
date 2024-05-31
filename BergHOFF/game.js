@@ -4,7 +4,7 @@ export class Game {
     constructor(canvas, ctx) {
         this.canvas = canvas
         this.ctx = ctx
-        this.gameState = 'start' // Start || playing 
+        this.gameState = 'start' // start || playing 
         this.speler = new Speler(this)
         this.initialiseerBackground()
     }
@@ -43,7 +43,6 @@ export class Game {
                 startSchermDisplay.style.display = "none"
                 this.canvas.classList.remove('blur-brightness')
                 this.startGame()
-                console.log(this.speler) // TEST remove
             })
         }
     }
@@ -51,7 +50,7 @@ export class Game {
         this.gameState = 'playing'
 
         if (this.gameState === 'playing') { // dubbele check dat game aan het spelen is en niet geeindigd is
-            this.speler.idle() // test remove!
+            this.speler.idle(100, 100) // test remove!
 
         }
     }
