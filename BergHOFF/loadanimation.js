@@ -5,11 +5,11 @@ export const loadAnimation = async function(frames, x, y, animationSpeed) {
     const app = new Application()
 
     await app.init({
-        width: 824, 
-        height: 630, 
+        width: 1920, 
+        height: 1080, 
         backgroundAlpha: 0, 
         autoDensity: true,
-        resizeTo: window,
+        //resizeTo: window,
 
     })
     document.body.appendChild(app.canvas)

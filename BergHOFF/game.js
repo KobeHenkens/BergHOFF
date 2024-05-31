@@ -50,8 +50,8 @@ export class Game {
         this.gameState = 'playing'
 
         if (this.gameState === 'playing') { // dubbele check dat game aan het spelen is en niet geeindigd is
-            //this.speler.idle(200, 450) // test remove!
-            this.speler.walk(300, 300)
+            this.speler.idle(200, 450) // test remove!
+            //this.speler.walk(300, 300)
 
         }
     }
