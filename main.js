@@ -11,5 +11,5 @@ const game = new Game(canvas, ctx)
 
 
 
-// Render startscherm
-game.startScherm()
+// Render het spel
+game.render()
