@@ -1,4 +1,6 @@
 import { Speler } from "./speler"
+import { levels } from "./levels"
+
 
 export class Game {
     constructor(canvas, ctx) {
@@ -6,7 +8,7 @@ export class Game {
         this.ctx = ctx
         this.gameState = 'start' // start || playing 
         this.speler = new Speler(this)
-        this.gameLevel = 1
+        this.gameLevel = null
     }
 
     startScherm() {
@@ -26,6 +28,8 @@ export class Game {
     }
     startGame() {
         this.gameState = 'playing'
+        this.gameLevel = 1
+        this.loadlevel(this.gameLevel) // Start level 1
         this.gameLoop() // Start de gameloop
     
     }
@@ -38,7 +42,8 @@ export class Game {
         }
     }
     update() {
-        // Check of level is gecomplete
+        // Check of level is gecompleted
+        this.checkLevelCompletion()
     }
     render() { 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Wis alles op de canvas
@@ -55,11 +60,11 @@ export class Game {
             // TODO: Render de score, etcetc
         }
     }
-    loadlevel() {
+    loadlevel(levelNumber) {
 
     }
     checkLevelCompletion() {
-        
+
     }
 
     initialiseerBackground() {
