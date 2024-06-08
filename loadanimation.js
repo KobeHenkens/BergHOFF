@@ -7,7 +7,7 @@ export const loadAnimation = async function(frames, x, y, animationSpeed) {
     await app.init({
         width: 1920, 
         height: 1080, 
-        backgroundAlpha: 0, 
+        backgroundAlpha: 0,   
         autoDensity: true,
         //resizeTo: window,
 
@@ -21,10 +21,11 @@ export const loadAnimation = async function(frames, x, y, animationSpeed) {
         // Animatie wordt gemaakt
         const animatedSprite = new AnimatedSprite(textures);
         animatedSprite.animationSpeed = animationSpeed; // Animatie snelheid
-        animatedSprite.play();
+        animatedSprite.play();  
         
         animatedSprite.x = x // Positie x-as
         animatedSprite.y = y // Positie y-as
+        
         
         app.stage.addChild(animatedSprite)
 
