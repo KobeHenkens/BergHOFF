@@ -3,16 +3,14 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
 }
 
-/* Helpers */ 
-
 .blur-brightness {
-    filter: blur(0.4rem) brightness(50%); 
-    
+    filter: blur(0.4rem) brightness(50%);
 }
 
 canvas {
@@ -21,12 +19,11 @@ canvas {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-   /* max-height: 100%; 
-    max-width: 100%;*/ /*Hou deze waarde als je wilt dat het een ander soort responsive is*/
     z-index: -1;
+    width: 1920px;
+    height: 1080px;
 }
 
-/* start scherm */ 
 .start-scherm {
     display: none;
     position: absolute;
@@ -34,6 +31,7 @@ canvas {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 .start-scherm h1 {
     font-family: "Pacifico";
     font-weight: 400;
@@ -41,11 +39,12 @@ canvas {
     color: #93ABA3;
     margin-bottom: 2rem;
 }
+
 .start-scherm span {
     color: #5F7658;
 }
+
 .start-scherm button {
-    /* TODO: px's omzetten naar REM */
     background: linear-gradient(145deg, #5F7658, #93ABA3);
     border: none;
     border-radius: 50px;
@@ -57,9 +56,11 @@ canvas {
     cursor: pointer;
     transition: all 0.3s ease;
 }
+
 .start-scherm button:hover {
     background: linear-gradient(145deg, #93ABA3, #5F7658);
 }
+
 .start-scherm button:active {
     box-shadow: 0 4px #93ABA3;
     transform: translateY(4px);
