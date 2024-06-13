@@ -2,7 +2,7 @@ export class Quiz {
     constructor() {
         this.questions = {};
         this.results = [];
-    }
+    }   
 
     addQuestions(questions) {
         this.questions = { ...this.questions, ...questions };
@@ -45,14 +45,17 @@ export class Quiz {
                 event.preventDefault();
                 const selectedIndex = parseInt(option.dataset.index);
                 const isCorrect = selectedIndex === huidigeQuestion.correctAnswer;
-                this.results.push({ question: huidigeQuestion.question, isCorrect, correctAnswer: huidigeQuestion.options[huidigeQuestion.correctAnswer] });
+                const selectedText = option.textContent;
+                this.results.push({ question: huidigeQuestion.question, isCorrect, correctAnswer: huidigeQuestion.options[huidigeQuestion.correctAnswer], answer: selectedText });
                 popup.remove();
                 callback(isCorrect);
+    
             });
         });
     }
 
-    getResults() {
+
+    getResultsList(){
         return this.results;
     }
 }

@@ -12,6 +12,8 @@ export class Game {
         this.renderPlayer = 1
         this.result = []
         this.selectedImageSrc = null
+        this.opgaveResult = []
+        this.quizCount = null;
 
 
         const questions = {
@@ -48,7 +50,7 @@ export class Game {
             
         }
         this.quiz.addQuestions(questions)
-        console.log(this.quiz.getResults()) // Check het resultaat 
+
     }
 
     startScherm() {
@@ -76,13 +78,11 @@ export class Game {
     gameLoop() {
 
         if (this.gameState === 'playing') { 
-            console.log(this.result) // test 
             this.checkLevelCompletion()
             this.render()
         }
     }
     render() { 
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Wis alles op de canvas
 
         this.initialiseerBackground() // Teken de achtergrond op de canvas
 
@@ -99,22 +99,31 @@ export class Game {
                 this.speler.remove()
                 const speler = this.speler.idle(700, 250)  
             }
+            if (this.renderPlayer === 3) {
+                this.speler.remove()
+                const speler = this.speler.idle(700, 250)
+            }
 
             if (this.selectedImageSrc && this.gameLevel === 1) {
                 this.drawImageOnCanvas(this.selectedImageSrc, 1330, 350, 150, 150) // Voeg deze regel toe
             }
-            // TODO: Render de score, etcetc
+
+            
+            if (this.selectedImageSrc && this.gameLevel === 2) {
+                this.drawImageOnCanvas(this.selectedImageSrc, 1330, 400, 150, 150) // Voeg deze regel toe
+            }
         }
     }
     loadlevel(levelNumber) {
+        this.clearCanvas()
         if (levelNumber === 1) {
             // POPUP Pasta koken
             this.showPopup(
                 'Level1',
-                'Level 1: Kook pasta', 
+                'Opgave Level 1: Kook pasta', 
                 'Bij dit level moet je pasta koken, dit doe je zo duurzaam en energieëfficient mogelijk. ',
                  true, 
-                 'Kook je water zo snel mogelijk',
+                 'Kook je water zo energieëfficient',
                   './images/potmetdeksel.png', 
                   './images/potzonderdeksel.png', 
                   './images/potmetdekselenzout.png',
@@ -122,26 +131,140 @@ export class Game {
                   (selectedImageSrc) => {
                         this.selectedImageSrc = selectedImageSrc;
                         this.render()
+
                         // Quizvraag na POPUP pasta koken
                         const randomQuestion = this.quiz.getRandomQuestion()
-                        console.log(randomQuestion.key)
                         this.quiz.showQuiz(randomQuestion.key, (isCorrect) => {
                             console.log('Quizvraag beantwoord:', isCorrect);
+                            this.quizCount++
                             // Check voor level voltooiing na het beantwoorden van de quizvraag
                             this.checkLevelCompletion();
                         })
                     }
                 )
-        }
+            }
+
+            if (levelNumber === 2) {
+                this.speler.remove()
+                this.renderPlayer = 1
+                this.result = []
+                this.quizCount = null // Reset de quiz count
+                this.selectedImageSrc = null // Reset de selected image for the new level
+                this.render()
+                this.showPopup(
+                    'Level2',
+                    'Opgave Level 2: Kook', 
+                    'Bij dit level moet je vlees bakken, dit doe je zo duurzaam en energieëfficient mogelijk. ',
+                     true, 
+                     'Maak je vlees klaar',
+                      './images/antiaanbakpan.png', 
+                      './images/gietijzenpan.png', 
+                      './images/roestvrijstalenpan.png',
+                      true, false, false,
+                      (selectedImageSrc) => {
+                            this.selectedImageSrc = selectedImageSrc;
+                            this.render()
+    
+                            // Quizvraag na POPUP pasta koken
+                            const randomQuestion = this.quiz.getRandomQuestion()
+                            this.quiz.showQuiz(randomQuestion.key, (isCorrect) => {
+                                console.log('Quizvraag beantwoord:', isCorrect);
+                                this.quizCount++
+                                this.checkLevelCompletion()
+                            })
+                        }
+                    )
+
+            }
     }
+
     checkLevelCompletion() {
-        const correct_result = [1]
 
-        if (this.result === correct_result) {
-            this.loadlevel(2)
+        if (this.gameLevel === 1) {
+            const correct_result = [true]
+
+            if (this.result.length === correct_result.length && this.quiz.getResultsList().length === this.quizCount) {
+                // Alle vragen zijn beantwoord en quizresultaten zijn verzameld, toon de popup met resultaten
+                const correctAnswers = this.quiz.getResultsList()
+                const opgaveAnswers = this.opgaveResult
+                console.log(correctAnswers)
+                console.log(opgaveAnswers)
+                this.showLevelCompletionPopup(correctAnswers, opgaveAnswers, 2);
+                this.result = []
+            }
+        }
+
+        if ( this.gameLevel === 2 ) {
+            const correct_result = [true]
+
+            if (this.result.length === correct_result.length && this.quiz.getResultsList().length === this.quizCount) {
+                // Alle vragen zijn beantwoord en quizresultaten zijn verzameld, toon de popup met resultaten
+                const correctAnswers = this.quiz.getResultsList()
+                const opgaveAnswers = this.opgaveResult
+                console.log(correctAnswers)
+                console.log(opgaveAnswers)
+                this.showLevelCompletionPopup(correctAnswers, opgaveAnswers, 3);
+            }
+
         }
 
     }
+
+    showLevelCompletionPopup(correctAnswers, opgaveAnswers, level) {
+        const resultPopup = document.createElement('div');
+        resultPopup.className = 'popup-frame';
+        resultPopup.id = 'level-completion-popup';
+
+        let popupContent = `
+            <div id="levelCompleted" class="popup-content">
+                <h2>Level Completed</h2>
+        `;
+
+        opgaveAnswers.forEach((answer) => {
+            popupContent += `
+                <h3>Feedback Opgave</h3>
+                <p>${answer}!</p>
+                <hr> 
+            `; // <hr> voor de witte lijn omdat ik geen box eronder kon zetten :)
+        });
+
+        correctAnswers.forEach((answer, index) => {
+            popupContent += `
+                <h3>Feedback Quiz</h3>
+                <p><span>Vraag ${index + 1}:</span> ${answer.question}</p>
+                <p><span>Jouw antwoord:</span> ${answer.answer}</p>
+                <p><span>Correct antwoord:</span> ${answer.correctAnswer}</p>
+                <p>${answer.isCorrect ? 'Goed gedaan!' : 'Helaas, dit antwoord was niet juist.'}</p>
+                <hr>
+            `;
+        });
+
+        popupContent += `
+            <div id='buttons'>
+                <a class="restart-game-button">Herstart het spel</a>
+                <a class="next-level-button">Ga naar Level 2</a>
+            </div>
+        `;
+
+        popupContent += `</div>`;
+        resultPopup.innerHTML = popupContent;
+        document.body.appendChild(resultPopup);
+
+        const nextLevelButton = resultPopup.querySelector('.next-level-button');
+        const restartGameButton = resultPopup.querySelector('.restart-game-button');
+
+        nextLevelButton.addEventListener('click', () => {
+            console.log(this.renderPlayer)
+            this.gameLevel = level
+            resultPopup.remove();
+            this.loadlevel(this.gameLevel); // Ga naar level 2
+        });
+
+        restartGameButton.addEventListener('click', () => {
+            window.location.reload(); // Herstart het spel
+        });
+    }
+
     showPopup(id, title, message, isAnswerPopup, titleisAnswerPopup, sub1, sub2, sub3, a1, a2, a3, callback) {
         const popup = document.createElement('div');
         popup.className = 'popup-frame';
@@ -212,22 +335,21 @@ export class Game {
                 const isCorrect = option.dataset.answer === 'true';
                 const selectedImageSrc = option.dataset.src;
                 this.result.push(isCorrect);
+
+                if (isCorrect) {
+                    this.opgaveResult.push(`Bij vraag: '${titleisAnswerPopup}' heb je het correct beantwoord`);
+                } else {
+                    this.opgaveResult.push(`Bij vraag: '${titleisAnswerPopup}' heb je het fout beantwoord`);
+                }
                 console.log('Selected answer:', isCorrect);
                 console.log('Selected image source:', selectedImageSrc);
+
                 this.renderPlayer++;
                 this.gameLoop()
                 answerPopup.remove();
                 callback(selectedImageSrc)
             });
         });
-    }
-
-
-    createImageDiv(imageSrc) {
-        const imageDiv = document.createElement('div');
-        imageDiv.className = 'selected-image';
-        imageDiv.innerHTML = `<img src=${imageSrc} alt="Selected Image">`;
-        document.body.appendChild(imageDiv);
     }
 
     drawImageOnCanvas(imageSrc, x, y, width, height) {
@@ -248,6 +370,8 @@ export class Game {
 
     }
 
-
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
     
 }

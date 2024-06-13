@@ -88,6 +88,7 @@ canvas {
     color: #fff;
     max-width: 80%;
     text-align: center;
+    max-height: 90%;
 }
 
 .popup-content h2 {
@@ -138,7 +139,7 @@ canvas {
 div.answer-options > a {
     align-items: center;
 }
-#Level1 a:hover {
+a:hover {
     scale: 1.2;
 }
 #showQuiz a {
@@ -148,4 +149,39 @@ div.answer-options > a {
 #showQuiz a:hover {
     scale: 1.2;
     
+}
+#levelCompleted h2 {
+    font-size: 4rem;
+}
+#levelCompleted h3 {
+    font-size: 2rem;
+    margin: 2rem 0 1rem;
+}
+
+#levelCompleted p {
+    margin-bottom: 1rem;
+}
+#levelCompleted span {
+    font-weight: 600;
+    color: var(--green1);
+}
+#levelCompleted a {
+    font-size: 2rem;
+}
+#levelCompleted #buttons {
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    padding: 1rem;
+    
+}
+#buttons a {
+    margin-bottom: 1rem;
+    margin-bottom: 0;
+    color: var(--green2);
+    font-weight: 600;
+    cursor: pointer;
+}   
+#buttons a:hover {
+    scale: 1.20;
 }
