@@ -138,3 +138,14 @@ canvas {
 div.answer-options > a {
     align-items: center;
 }
+#Level1 a:hover {
+    scale: 1.2;
+}
+#showQuiz a {
+    color: #fff;
+    font-size: 2rem;
+}
+#showQuiz a:hover {
+    scale: 1.2;
+    
+}

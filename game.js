@@ -1,4 +1,5 @@
 import { Speler } from "./speler"
+import { Quiz } from "./quiz"
 
 export class Game {
     constructor(canvas, ctx) {
@@ -6,11 +7,48 @@ export class Game {
         this.ctx = ctx
         this.gameState = 'start' // start || playing 
         this.speler = new Speler(this)
+        this.quiz = new Quiz()
         this.gameLevel = null
         this.renderPlayer = 1
         this.result = []
         this.selectedImageSrc = null
-        console.log(this.result)
+
+
+        const questions = {
+            'question1': {
+                question: 'Wat is een voorbeeld van een energiezuinige kookmethode?',
+                options: ['Frituren', 'Stomen', 'Bakken'],
+                correctAnswer: 1
+            },
+            'question2': {
+                question: 'Welke hittebron is over het algemeen energie-efficiënter voor koken?',
+                options: ['Elektrische kookplaat', 'Inductiekookplaat', 'Gasfornuis'],
+                correctAnswer: 2
+            },
+            'question3': {
+                question: 'Welk type kookgerei zorgt voor een gelijkmatigere verdeling van warmte en kan helpen bij energiebesparing?',
+                options: ['Aluminium pannen', 'Gietijzeren pannen', 'Koperen pannen'],
+                correctAnswer: 1
+            },
+            'question4': {
+                question: 'Hoe kun je energie besparen tijdens het koken op een gasfornuis?',
+                options: ['Een grote pan gebruiken voor kleine hoeveelheden voedsel', 'De pan voortijdig van de brander halen', 'De pan bedekken met een deksel tijdens het koken'],
+                correctAnswer: 2
+            },
+            'question5': {
+                question: 'Wat is een duurzaam alternatief voor wegwerpbare keukenproducten zoals aluminiumfolie?',
+                options: ['Plastic folie', 'Siliconen bakmatten', 'Papieren zakdoekjes'],
+                correctAnswer: 1
+            },
+            'question6': {
+                question: 'Welke actie helpt om energie te besparen tijdens het koken op een elektrische kookplaat?',
+                options: ['De kookplaat op de hoogste stand zetten', 'Een deksel op de pan houden tijdens het koken', ' Een kleine pan op een grote brander gebruiken'],
+                correctAnswer: 2
+            },
+            
+        }
+        this.quiz.addQuestions(questions)
+        console.log(this.quiz.getResults()) // Check het resultaat 
     }
 
     startScherm() {
@@ -38,13 +76,10 @@ export class Game {
     gameLoop() {
 
         if (this.gameState === 'playing') { 
-            this.update()
+            console.log(this.result) // test 
+            this.checkLevelCompletion()
             this.render()
         }
-    }
-    update() {
-        // Check of level is gecompleted
-        this.checkLevelCompletion()
     }
     render() { 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Wis alles op de canvas
@@ -73,26 +108,30 @@ export class Game {
     }
     loadlevel(levelNumber) {
         if (levelNumber === 1) {
-            const a1 = true;
-            const a2= false;
-            const a3 = false;
+            // POPUP Pasta koken
             this.showPopup(
                 'Level1',
                 'Level 1: Kook pasta', 
                 'Bij dit level moet je pasta koken, dit doe je zo duurzaam en energieëfficient mogelijk. ',
                  true, 
-                 'Wat is de beste manier om water te koken',
+                 'Kook je water zo snel mogelijk',
                   './images/potmetdeksel.png', 
                   './images/potzonderdeksel.png', 
                   './images/potmetdekselenzout.png',
-                  a1, a2, a3,
+                  false, false, true,
                   (selectedImageSrc) => {
                         this.selectedImageSrc = selectedImageSrc;
                         this.render()
-                        
+                        // Quizvraag na POPUP pasta koken
+                        const randomQuestion = this.quiz.getRandomQuestion()
+                        console.log(randomQuestion.key)
+                        this.quiz.showQuiz(randomQuestion.key, (isCorrect) => {
+                            console.log('Quizvraag beantwoord:', isCorrect);
+                            // Check voor level voltooiing na het beantwoorden van de quizvraag
+                            this.checkLevelCompletion();
+                        })
                     }
                 )
-
         }
     }
     checkLevelCompletion() {
@@ -125,7 +164,7 @@ export class Game {
         closeButton.addEventListener('click', () => {
             popup.remove();
             this.renderPlayer++
-            this.render()
+            this.gameLoop()
             if (isAnswerPopup) {
                 this.showAnswerPopup(id, titleisAnswerPopup, sub1, sub2, sub3, a1, a2, a3, callback); 
             }
@@ -176,7 +215,7 @@ export class Game {
                 console.log('Selected answer:', isCorrect);
                 console.log('Selected image source:', selectedImageSrc);
                 this.renderPlayer++;
-                this.render()
+                this.gameLoop()
                 answerPopup.remove();
                 callback(selectedImageSrc)
             });
@@ -208,4 +247,7 @@ export class Game {
         }
 
     }
+
+
+    
 }
