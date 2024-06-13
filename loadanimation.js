@@ -1,18 +1,26 @@
 import { Application, Assets, AnimatedSprite, Container } from 'pixi.js';
        
+    let app;
+
+
 // DOCS BRON: https://pixijs.com/8.x/guides/basics/getting-started#loading-pixijs
 export const loadAnimation = async function(frames, x, y, animationSpeed) {
-    const app = new Application()
 
-    await app.init({
-        width: 1920, 
-        height: 1080, 
-        backgroundAlpha: 0,   
-        autoDensity: true,
-        //resizeTo: window,
+    if (!app) {
+      app = new Application()
 
-    })
-    document.body.appendChild(app.canvas)
+      await app.init({
+          width: 1920, 
+          height: 1080, 
+          backgroundAlpha: 0,   
+          autoDensity: true,
+          //resizeTo: window,
+  
+      })
+      document.body.appendChild(app.canvas)
+    }
+
+
     
 
       // Alle afbeeldingen worden ingeladen
@@ -28,6 +36,13 @@ export const loadAnimation = async function(frames, x, y, animationSpeed) {
         
         
         app.stage.addChild(animatedSprite)
+        
+        return animatedSprite;
 
 }
+
+// Function to clear the canvas
+export const clearCanvas = function() {
+  app.stage.removeChildren(); // Removes all children from the stage
+};
 

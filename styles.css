@@ -3,6 +3,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+:root {
+    --green1: #5F7658;
+    --green2: #93ABA3;
+}
 
 body {
     font-family: Arial, sans-serif;
@@ -14,14 +18,15 @@ body {
 }
 
 canvas {
-    border: 5px solid #000;
+    border: 0.3125rem solid #000;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 120rem;
+    height: 67.5rem;
     z-index: -1;
-    width: 1920px;
-    height: 1080px;
+
 }
 
 .start-scherm {
@@ -36,7 +41,7 @@ canvas {
     font-family: "Pacifico";
     font-weight: 400;
     font-size: 4rem;
-    color: #93ABA3;
+    color: var(--green2);
     margin-bottom: 2rem;
 }
 
@@ -45,23 +50,91 @@ canvas {
 }
 
 .start-scherm button {
-    background: linear-gradient(145deg, #5F7658, #93ABA3);
+    background: linear-gradient(145deg, var(--green1), var(--green2));
     border: none;
-    border-radius: 50px;
+    border-radius: 3.125rem;
     color: white;
     font-size: 1.5em;
     font-weight: bold;
-    padding: 15px 30px;
-    box-shadow: 0 8px #93ABA3;
+    padding: 0.9375rem 1.875rem;
+    box-shadow: 0 0.5rem var(--green2);
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .start-scherm button:hover {
-    background: linear-gradient(145deg, #93ABA3, #5F7658);
+    background: linear-gradient(145deg, var(--green2), var(--green1));
 }
 
 .start-scherm button:active {
-    box-shadow: 0 4px #93ABA3;
-    transform: translateY(4px);
+    box-shadow: 0 0.25rem var(--green2);
+    transform: translateY(0.25rem);
+}
+
+.hidden {
+    display: none;
+}
+/* CSS popup */
+.popup-frame {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    color: #fff;
+    max-width: 80%;
+    text-align: center;
+}
+
+.popup-content h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: var(--green1);
+}
+
+.popup-content p {
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+}
+
+.popup-content .close-popup {
+    background: var(--green1);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.popup-content .close-popup:hover {
+    background-color: var(--green2);
+}
+.popup-content a {
+    font-size: 3rem;
+    color: var(--green2);
+    text-decoration: none;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+}
+.popup-content img {
+    width: 8rem;
+    height: 8rem;
+}
+
+.selected-image img {
+    width: 8rem;
+    height: 8rem;
+
+}
+
+div.answer-options > a {
+    align-items: center;
 }
